@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ajax | Jquery | Bootstrap | PHP</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="js/jquery.js"></script>
+        <script src="js/app.js" defer></script>
+    </head>
+
+  <body class="bg-body-secondary">
+    <div class="box border border-secondary-subtle border-1 mx-5 my-5">
+        <div class="row">
+            <h1 id="judull" class="text-center mt-5">Data dari API & Database</h1>
+        </div>
+        <hr class="border-1">
+
+        <div class="text-center">
+            <div class="row mb-3">
+                <div id="msg"></div>
+            </div>
+        </div>
+
+
+        <div class="container" id="tombol">
+            <div class="row">
+                    <div class="col">
+                        <h5 class="satu mt-4">Data Pelanggan & Barang</h5>
+                        <button id="panggil" class="getdata btn btn-outline-secondary"> <span id="span1">GET</span>  &nbsp; | &nbsp; <span id="span2">DELETE</span> &nbsp; | &nbsp; <span id="span3">UPDATE</span> &nbsp; | &nbsp; <span id="span4">CART</span></button>
+                    </div>
+                    <!-- <div class="col">
+                        <h3 class="satu mt-4">Data Order</h3>
+                        <button id="order" type="button" class="btn btn-outline-primary">GET DELETE UPDATE</button>
+                        <button type="button" id="btn-tambahdua" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ordermodal">POST</button>
+                    </div> -->
+                    <div class="col mt-1" hidden>
+                        <!-- <h3 class="dua mt-4">Data Order Detail</h3> -->
+                        <button id="orderdetail" type="button" class="btn btn-outline-danger mt-5">Data Order Detail</button>
+                        <!-- <button type="button" id="btn-tambahtiga" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#orderdetailmodal">POST</button> -->
+                    </div>
+                    <div class="col">
+                        <h5 class="satu mt-4">Tambah Pelanggan & Barang</h5>
+                        <!-- <button id="barang" type="button" class="btn btn-outline-primary">GET DELETE UPDATE</button> -->
+                        <button type="button" id="btn-tambah" class="getdata btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal"><span id="span1">POST</span> <span id="span2">PELANGGAN</span></button>
+                        <button type="button" id="btn-tambahempat" class="getdata btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#barangmodal"><span id="span3">POST</span> <span id="span4">BARANG</span></button></button>
+                    </div>
+            </div>
+
+            <hr id="hr2" class="mt-4 border-2">
+        </div>
+        
+        <div class="container my-4">
+            <div class="table-responsive">
+                <table class="table table-primary table-bordered border-light border-3">
+                    <tbody id="satusatu"></tbody>
+                </table>      
+                <table class="table table-primary table-bordered border-light border-3">
+                    <tbody id="satudua"></tbody>
+                </table>      
+                <table class="table table-danger table-bordered border-light border-3">
+                    <tbody id="satutiga"></tbody>
+                </table>      
+                <table class="table table-danger table-bordered border-light border-3">
+                    <tbody id="satuempat"></tbody>
+                </table>      
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="text-align: left;">
+                    <div class="modal-header">
+                        <h4 class="modal-title fs-5" id="titel">Tambah Pelanggan</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" hidden class="form-control" id="id" required aria-describedby="emailHelp">
+                                <label for="exampleInputEmail1" class="form-label">Pelanggan</label>
+                                <input type="text" class="form-control" id="pelanggan" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Telp</label>
+                                <input type="text" class="form-control" id="telp" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <button type="submit" id="submitpelanggan" data-bs-dismiss="modal" class="btn btn-primary">Simpan</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="modal fade" id="ordermodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="text-align: left;">
+                    <div class="modal-header">
+                        <h4 class="modal-title fs-5" id="titel">Tambah Order</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Id Order</label>
+                                <input type="text" class="form-control" id="idorder" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Id Pelanggan</label>
+                                <input type="text" class="form-control" id="idpelanggan" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Tanggal Order</label>
+                                <input type="date" class="form-control" id="tglorder" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Total</label>
+                                <input type="number" class="form-control" id="total" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Bayar</label>
+                                <input type="number" class="form-control" id="bayar" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Kembali</label>
+                                <input type="number" class="form-control" id="kembali" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <button type="submit" id="submit" data-bs-dismiss="modal" class="btn btn-primary">Simpan</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="modal fade" id="orderdetailmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="text-align: left;">
+                    <div class="modal-header">
+                        <h4 class="modal-title fs-5" id="titele">Tambah Order Detail</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                        <div class="mb-3" hidden>
+                                <label for="exampleInputEmail1" class="form-label">Id Order Detail</label>
+                                <input type="text" class="form-control" id="idorderdetail" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Id Order</label>
+                                <input type="text" class="form-control" id="idorder" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Id Barang</label>
+                                <input type="text" class="form-control" id="idbarang" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Jumlah</label>
+                                <input type="text" class="form-control" id="jumlah" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Harga</label>
+                                <input type="text" class="form-control" id="harga" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Barang</label>
+                                <input type="text" class="form-control" id="barang" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Id Pelanggan</label>
+                                <input type="text" class="form-control" id="idpelanggan" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Pelanggan</label>
+                                <input type="text" class="form-control" id="pelanggann" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+
+                            <button type="submit" id="submit" data-bs-dismiss="modal" class="btn btn-primary">Simpan</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="barangmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="text-align: left;">
+                    <div class="modal-header">
+                        <h4 class="modal-title fs-5" id="judulll">Tambah Barang</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3" hidden>
+                                <label for="exampleInputEmail1" class="form-label">Id</label>
+                                <input type="text"  class="form-control" id="id" required aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="description" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Price</label>
+                                <input type="number" class="form-control" id="price" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Discount Percentage</label>
+                                <input type="text" class="form-control" id="discountPercentage" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Rating</label>
+                                <input type="text" class="form-control" id="rating" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="stock" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Brand</label>
+                                <input type="text" class="form-control" id="brand" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Categori</label>
+                                <input type="text" class="form-control" id="category" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Thumbnail</label>
+                                <input type="text" class="form-control" id="thumbnail" required>
+                                <div id="emailHelp" class="form-text">Harus diisi</div>
+                            </div>
+
+                            <button type="submit" id="submitbarang" data-bs-dismiss="modal" class="btn btn-primary">Simpan</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+            th{
+                color:rgb(66, 66, 66);
+                text-align: center;
+            }
+            td {
+                color:rgb(57, 76, 76);
+                text-align: center;
+            }
+            #tombol {
+                text-align: center;
+            }
+            #judull {
+                color:hotpink;
+                font-family: "Cambria";
+                font-weight: bold;
+            }
+            h5 {
+                color:darkslategray;
+                font-family: "Cambria";
+            }
+            .satu{
+                font-family:"Cambria";
+                color:rgb(140, 132, 197);
+            }
+            .dua{
+                font-family: "Serif";
+                color:slategrey;
+            }
+            #orderdetail {
+                font-family: "Serif";
+                font-size: 25px;
+            }
+            hr {
+                width: 600px;
+                margin: auto;
+            }
+            #hr2 {
+                width: 1300px;
+                border-style:dashed;
+                border-color: black;
+            }
+            #input {
+                font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            }
+            .box {
+                background: radial-gradient(#f8dbea, #f2fdfc);
+            }
+            .getdata {
+                color:slategray;
+                font-family:"Calibri";
+            }
+            .use{
+                font-family:inherit;
+                color:darkred;
+            }
+            #span1{
+                color: red;
+            }
+            #span2{
+                color: rgb(167, 167, 6);
+            }
+            #span3{
+                color: green;
+            }
+            #span4{
+                color: blue;
+            }
+        </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
+  </body>
+</html>
