@@ -392,10 +392,10 @@ $(document).ready(function () {
         });
     }
     
-    $("#barang").click(function (e) { 
-        e.preventDefault();
-        selectDataBarang();
-    });
+    // $("#barang").click(function (e) { 
+    //     e.preventDefault();
+    //     selectDataBarang();
+    // });
 
     $("#panggil").click(function (e) { 
         e.preventDefault();
@@ -694,7 +694,7 @@ $(document).ready(function () {
     function deleteSatuBarang(id) {
 
         $.ajax({
-            type: "get",
+            type: "post",
             method: "delete",
             url: `https://dummyjson.com/products/${id}`,
             dataType: "json",
